@@ -1,0 +1,28 @@
+<h1>My Page</h1>
+<%= image_tag @user.image_url, size: "141x141" if @user.image? %>
+<p>名前 : <%= @user.name %></p>
+<p>プロフィール : <%= @user.profile %></p>
+
+<% if current_user.id == @user.id %>
+  <%= link_to "編集", edit_user_registration_path %>
+<% end %>
+
+<h2>ユーザーの投稿一覧</h2>
+<% @user.comments.each do |t| %>
+  <a href="/posts/<%= t.post.id %>"><%= t.post.name %></a>
+  <%= t.content %>
+  <br>
+<% end %>
+
+
+<h2>ユーザーがいいねした投稿一覧</h2>
+<% @user.liked_posts.each do |t| %>
+  <%= t.name %>
+  <%= t.prefecture %>
+  <br>
+<% end %>
+
+
+
+
+<%= link_to "トップページ", root_path %>

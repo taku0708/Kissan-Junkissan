@@ -1,0 +1,27 @@
+
+
+<% if user_signed_in? %>
+<%= link_to "マイページへ", user_path(current_user.id) %>　
+<% end %>
+<%= link_to "top", root_path %>
+
+<%= page_entries_info @posts %>
+
+<div class="posts-container">
+  <% @posts.each do |p| %>
+    <div class="post">
+      <%= image_tag p.image_url, size: "100x50" if p.image? %>
+      <%= p.name %>
+      <%= link_to "喫茶店詳細", post_path(p.id) %>
+      <i class="far fa-heart"></i><%= p.likes.count %>
+    </div>
+    
+  <% end %>
+</div>
+
+<%= paginate @posts %>
+
+
+
+
+

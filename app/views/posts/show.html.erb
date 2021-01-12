@@ -1,0 +1,153 @@
+<div class="post">
+  <p><%= @post.name %></p>
+  <p><%= @post.prefecture %></p>
+  <%= image_tag @post.image_url, size: "250x200" if @post.image? %>
+  <%= image_tag @post.image_two_url, size: "250x200" if @post.image_two? %>
+  <%= image_tag @post.image_three_url, size: "250x200" if @post.image_three? %>
+  <%= image_tag @post.image_four_url, size: "250x200" if @post.image_four? %>
+  <%= image_tag @post.image_five_url, size: "250x200" if @post.image_five? %>
+  <%= image_tag @post.image_six_url, size: "250x200" if @post.image_six? %>
+  <p id="address"><%= @post.address %></p>
+  <div id="latlngDisplay"></div>
+  <div id="addressDisplay">住所</div>
+  <div id='map'></div>
+
+  <% if user_signed_in? %>
+      <% if current_user.already_liked?(@post) %>
+          <%= link_to post_like_path(@post), method: :delete do %>
+            <i class="fas fa-heart"></i><%= @post.likes.count %>
+          <% end %>
+      <% else %>
+          <%= link_to post_likes_path(@post), method: :post do %>
+            <i class="far fa-heart"></i><%= @post.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+     <i class="far fa-heart"></i><%= @post.likes.count %>
+  <% end %>
+</div>
+
+<style>
+      #map {
+        height: 300px;
+        width: 300px;
+      }
+      #latlngDisplay {
+        display: none;
+      }
+      #addressDisplay {
+        display: none;
+      }
+</style>
+
+<script>
+      let map
+      
+      const latlngDis = document.getElementById('latlngDisplay')
+      const addressDis = document.getElementById('addressDisplay')
+      
+      function initMap(){
+        geocoder = new google.maps.Geocoder()
+      
+        tokyo = {lat: 35.6803997, lng: 139.7690174}
+      
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.6803997, lng: 139.7690174},
+          zoom: 15,
+        });
+      
+        marker = new google.maps.Marker({
+          position: {lat: 35.6803997, lng: 139.7690174},
+          map: map
+        });
+      }
+      
+      let geocoder
+      const display = document.getElementById('display')
+      
+      
+      function codeAddress(){
+        let inputAddress = document.getElementById('address').textContent
+      
+        geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+          if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            latlngDis.innerHTML = results[0].geometry.location;
+      
+            geocoder.geocode({ 'location': marker.getPosition()}, function(results, status) {
+              if (status == "OK"){
+                addressDis.innerHTML = results[0].formatted_address;
+              } else {
+                alert("Geocode 取得に失敗しました：" + status);
+              }
+            });
+      
+          } else {
+            alert('該当する結果がありませんでした：' + status);
+          }
+        });   
+      }
+
+      window.onload = function() {
+        codeAddress()
+      }
+      
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
+
+<a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.name unless c.user.blank? %><br>
+      <% c.user.id = @post.user.id %>
+      <%= c.content %>
+      <%= image_tag c.image_url, size: "50x50" if c.image? %>
+      <%= link_to "編集", edit_post_comment_path(@post, c.id) %>
+      <%= link_to '削除', post_comment_path(@post, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
+    </div>
+
+    <% if user_signed_in? %>
+        <% if current_user.already_niced?(c) %>
+           <%= link_to comment_nice_path(id: c.id, comment_id: c.id), method: :delete do %>
+              <i class="fas fa-heart"></i><%=c.nices.count %>
+           <% end %>
+        <% else %>
+           <%= link_to comment_nices_path(id: c.id, comment_id: c.id), method: :post do %>
+              <i class="far fa-heart"></i><%= c.nices.count %>
+           <% end %>
+        <% end %>
+    <% else %>
+        <i class="far fa-heart"></i><%= c.nices.count %>
+    <% end %>
+    
+  <% end %>
+
+  
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@post, @comment], local: true) do |f| %>
+      <%= f.text_area :content %><br>
+      <%= f.file_field :image %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> レビュー投稿
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "喫茶店検索に戻る", posts_path %>
+<%= link_to "編集", edit_post_path(@post.id) %>
+<%= link_to "削除", post_path(@post.id), method: :delete, data: {confirm: '削除してよろしいですか？'} %>
+
+
+
+
+
+

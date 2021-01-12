@@ -1,0 +1,30 @@
+<%= form_for @post do |f| %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, :size => 100 %>
+      <br>  
+      <%= f.label :prefecture %>
+      <%= f.text_field :prefecture, :size => 60 %>
+      <br>
+      <%= f.label :address %>
+      <%= f.text_field :address, :size => 100 %>
+      <br>
+      <%= f.label :parking %>
+      <%= f.radio_button :parking, "有" %>有 <%= f.radio_button :parking, "無" %>無
+      <br>
+      <%= f.label :tel %>
+      <%= f.text_field :tel, :size => 100 %>
+      <br>  
+      <%= f.label :HP %>
+      <%= f.text_field :hp, :size => 100 %>
+      <br> 
+      <%= f.label :営業時間 %>
+      <%= f.text_area :business_hours, class:"hoge", size: "30x10" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :image %>
+      <%= f.file_field :image %>
+    </div>
+    <%= f.submit "投稿" %>
+<% end %>

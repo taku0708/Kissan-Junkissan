@@ -1,0 +1,6 @@
+<%= form_with(model: [@post, @comment], local: true) do |f| %>
+    <%= f.text_area :content %>
+    <%= button_tag type: "submit" do %>
+      <i class="far fa-comments"></i> レビュー投稿
+    <% end %>
+<% end %>

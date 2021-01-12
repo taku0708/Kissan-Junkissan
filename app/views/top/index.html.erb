@@ -1,0 +1,53 @@
+<% if user_signed_in? %>
+    <li><%= link_to "マイページへ", user_path(current_user.id) %></li>
+    <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+<% else %>
+    <li><%= link_to "新規登録", new_user_registration_path %></li>
+    <li><%= link_to "ログイン", new_user_session_path %></li>
+<% end %>
+
+<%= link_to "施設登録", new_post_path %>
+
+<%= search_form_for(@q, url:posts_path) do |f| %>
+  <p>
+    <%= f.label :name_or_prefecture_or_address_or_nearest_station_cont, '名前' %>
+    <%= f.search_field :name_cont %>
+  </p>
+
+  <p>
+    <%= f.check_box :wifi_eq %>
+    <%= f.label :wifi_eq, "wifi" %>
+  </p>
+
+  <p>
+    <%= f.label :outlet_eq, '電源' %>
+    <%= f.radio_button :outlet_eq, "電源" %>
+  </p>
+
+  <p>
+    <%= f.label :dessert_eq, 'デザート' %>
+    <%= f.radio_button :dessert_eq, "デザート" %>
+  </p>
+
+  <p>
+    <%= f.label :lunch_eq, 'ランチメニュー' %>
+    <%= f.radio_button :lunch_eq, "ランチメニュー" %>
+  </p>
+
+  <p>
+    <%= f.label :snack_eq, '軽食（サンドウィッチ等）' %>
+    <%= f.radio_button :snack_eq, "軽食" %>
+  </p>
+
+  <p>
+    <%= f.label :tobacco_eq, 'たばこ' %>
+    <%= f.radio_button :tobacco_eq, "たばこ" %>
+  </p>
+
+  <p>
+    <%= f.label :parking_eq, '駐車場' %>
+    <%= f.radio_button :parking_eq, "駐車場" %>
+  </p>
+  
+<%= f.submit %>
+<% end %>
