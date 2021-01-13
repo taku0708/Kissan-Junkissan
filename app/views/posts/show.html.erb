@@ -143,8 +143,11 @@
 </div>
 
 <%= link_to "喫茶店検索に戻る", posts_path %>
-<%= link_to "編集", edit_post_path(@post.id) %>
-<%= link_to "削除", post_path(@post.id), method: :delete, data: {confirm: '削除してよろしいですか？'} %>
+
+<% if user_signed_in? && current_user.id == @post.user_id %>  
+  <%= link_to "編集", edit_post_path(@post.id) %>
+  <%= link_to "削除", post_path(@post.id), method: :delete, data: {confirm: '削除してよろしいですか？'} %>
+<% end %>
 
 
 
