@@ -1,31 +1,240 @@
-<div class="post">
-  <p><%= @post.name %></p>
-  <p><%= @post.prefecture %></p>
-  <%= image_tag @post.image_url, size: "250x200" if @post.image? %>
-  <%= image_tag @post.image_two_url, size: "250x200" if @post.image_two? %>
-  <%= image_tag @post.image_three_url, size: "250x200" if @post.image_three? %>
-  <%= image_tag @post.image_four_url, size: "250x200" if @post.image_four? %>
-  <%= image_tag @post.image_five_url, size: "250x200" if @post.image_five? %>
-  <%= image_tag @post.image_six_url, size: "250x200" if @post.image_six? %>
-  <p id="address"><%= @post.address %></p>
-  <div id="latlngDisplay"></div>
-  <div id="addressDisplay">住所</div>
-  <div id='map'></div>
-
-  <% if user_signed_in? %>
-      <% if current_user.already_liked?(@post) %>
-          <%= link_to post_like_path(@post), method: :delete do %>
-            <i class="fas fa-heart"></i><%= @post.likes.count %>
+<div class="post-show-homebox">
+  <header>
+    <div class="header-title">Kissan/Junkissan</div>
+    <div class="header-submenu">
+      <% if user_signed_in? %>
+        <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
+      <% end %>
+      <div class="header-submenu-button">
+        <div class="header-submenu-button-writing">
+          <i class="fas fa-pen icon"></i>
+          喫茶店登録
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="post-show-matherbox">
+    <div class="post-show-edit-username-box">
+      <%= link_to "編集", edit_post_path(@post.id) %>
+    </div>
+    <div class="post-show-postname">
+      <%= @post.name %>
+    </div>
+    <div class="post-show-heart-comment">
+      <% if user_signed_in? %>
+          <% if current_user.already_liked?(@post) %>
+              <%= link_to post_like_path(@post), method: :delete do %>
+                <i class="fas fa-heart"></i><%= @post.likes.count %>
+              <% end %>
+          <% else %>
+              <%= link_to post_likes_path(@post), method: :post do %>
+                <i class="far fa-heart"></i><%= @post.likes.count %>
+              <% end %>
           <% end %>
       <% else %>
-          <%= link_to post_likes_path(@post), method: :post do %>
-            <i class="far fa-heart"></i><%= @post.likes.count %>
-          <% end %>
+        <i class="far fa-heart"></i><%= @post.likes.count %>
       <% end %>
-  <% else %>
-     <i class="far fa-heart"></i><%= @post.likes.count %>
-  <% end %>
+      <i class="far fa-comment comment-icon"></i><%= @post.comments.count %>
+    </div>
+    <div class="post-show-shousai-matherbox">
+      <div class="post-show-shousai-image">
+        <div class="post-show-shousai-postimage">
+          <%= image_tag @post.image_url, size: "395x240" if @post.image? %>
+        </div>
+        <div class="post-show-shousai-gmap">
+          <div id='map'></div>
+        </div>
+      </div>
+      <div class="post-show-shousai-content">
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">喫茶店名</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.name %>
+          </div>
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">都道府県</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.prefecture %>
+          </div>
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">住所</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.address %>
+          </div>
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">最寄り駅</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.nearest_station %>
+          </div>
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">電話番号</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.tel %>
+          </div>
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">ホームページ</div>
+          <div class="post-show-shousai-content-postname">
+            <%= @post.hp %>
+          </div> 
+        </div>
+        <div class="post-show-shousai-content-underline"></div>
+        <div class="post-show-shousai-content-eachbox">
+          <div class="post-show-shousai-content-kissatenmei">項目</div>
+          <div class="post-show-shousai-content-koumoku">
+            <div class="post-show-shousai-content-koumoku-each">
+              <%  if @post.wifi == nil %>
+                wifi -
+            　<% else %>
+                wifi ○
+              <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.outlet == nil %>
+              電源 -
+          　<% else %>
+              電源 ○
+            <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.dessert == nil %>
+              デザート -
+          　<% else %>
+              デザート ○
+            <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.lunch == nil %>
+              ランチ -
+          　<% else %>
+              ランチ ○
+            <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.snack == nil %>
+            軽食 -
+          　<% else %>
+              軽食 ○
+            <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.tobacco == nil %>
+              たばこ -
+          　<% else %>
+              たばこ ○
+            <% end %>
+            </div>
+            <div class="post-show-shousai-content-koumoku-each">
+            <%  if @post.parking == nil %>
+              駐車場 -
+          　<% else %>
+              駐車場 ○
+            <% end %>
+            </div>
+          </div> 
+        </div>
+
+      </div>
+    </div>
+    <div class="post-show-vacantbox-before-reviewheadline"></div>
+    <div class="post-show-postname">レビュー・体験記</div>
+    <div class="new-review-contents">
+      <% @comments.each do |n| %>
+        <div class="new-review-bigbox">
+          <div class="new-review-information">
+            <div class="new-review-information-image">
+              <%= image_tag n.user.image_url, class:"review-user-icon", size: "35x35" if n.user.image? %>
+            </div>
+            <a href="/users/<%= n.user.id %>" class="review-kissan-user-name"><%= n.user.name %></a> 
+          </div>
+
+          <div class="new-review-content-text-matherbox">
+            <div class="new-review-content-text">
+              <%= n.content %>
+            </div>
+            <%= image_tag n.image_url, class:"new-review-content-image", size: "100x100" if n.image? %>
+          </div>
+          <div class="comment-nices">
+            <% if user_signed_in? %>
+                <% if current_user.already_niced?(n) %>
+                  <%= link_to comment_nice_path(id: n.id, comment_id: n.id), method: :delete do %>
+                      <i class="fas fa-heart"></i><%=n.nices.count %>
+                  <% end %>
+                <% else %>
+                  <%= link_to comment_nices_path(id: n.id, comment_id: n.id), method: :post do %>
+                      <i class="far fa-heart"></i><%= n.nices.count %>
+                  <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-heart"></i><%= c.nices.count %>
+            <% end %>
+          </div>
+        </div>
+        <div class="new-review-vacantbox"></div>
+        <div class="new-review-line"></div>
+      <% end %>
+    </div>
+    <div class="new-review-pagenation">
+        <%= paginate @comments %>
+    </div>
+    <div class="post-show-postname">レビュー投稿</div>
+    <div class="review-writing-matherbox">
+      <div class="vacant-before-writingbox"></div>
+      <% if user_signed_in? %>
+        <%= form_with(model: [@post, @comment], local: true) do |f| %>
+          <%= f.text_area :content, class:"review-writing-box"  %>
+          <%= f.file_field :image , class:"post-show-review-imagebox" %>
+          <%= button_tag type: "submit" do %>
+            <i class="far fa-comments"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="post-show-postname">写真ギャラリー</div>
+    <div class="post-show-image-gallery">
+            <div class="post-show-each-image">
+              <%= image_tag @post.image_two_url, size: "260x200" if @post.image_two? %>
+            </div>
+            <div class="post-show-each-image">
+              <%= image_tag @post.image_three_url, size: "260x200" if @post.image_three? %>
+            </div>
+            <div class="post-show-each-image">
+              <%= image_tag @post.image_four_url, size: "260x200" if @post.image_four? %>
+            </div>
+            <div class="post-show-each-image">
+              <%= image_tag @post.image_five_url, size: "260x200" if @post.image_five? %>
+            </div>
+            <div class="post-show-each-image">
+              <%= image_tag @post.image_six_url, size: "260x200" if @post.image_six? %>
+            </div>
+    </div>
+  </div>
 </div>
+<footer>
+  <div class="footer-vacantbox"></div>
+  <div class="junkissan-box">Kissan/Junkissan</div>
+  <div class="junkissan-headline">未知の世界はすぐそこに。</div>
+  <div class="junkissan-snsbox">
+    <div class="junkissan-share">Share .</div>
+    <div class="junkissan-sns">
+      <i class="fab fa-twitter twitter"></i>
+      <i class="fab fa-facebook-f facebook"></i>
+      <i class="fab fa-instagram instagram"></i>
+    </div>
+  </div>
+  <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
+</footer>
+
+
 
 <style>
       #map {
@@ -99,56 +308,13 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
 
-<a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>
 
-<div class="comment-wrapper">
-  <p>コメント一覧</p>
-  <% @comments.each do |c| %>
-    <div>
-      <%= c.user.name unless c.user.blank? %><br>
-      <% c.user.id = @post.user.id %>
-      <%= c.content %>
-      <%= image_tag c.image_url, size: "50x50" if c.image? %>
-      <%= link_to "編集", edit_post_comment_path(@post, c.id) %>
-      <%= link_to '削除', post_comment_path(@post, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
-    </div>
 
-    <% if user_signed_in? %>
-        <% if current_user.already_niced?(c) %>
-           <%= link_to comment_nice_path(id: c.id, comment_id: c.id), method: :delete do %>
-              <i class="fas fa-heart"></i><%=c.nices.count %>
-           <% end %>
-        <% else %>
-           <%= link_to comment_nices_path(id: c.id, comment_id: c.id), method: :post do %>
-              <i class="far fa-heart"></i><%= c.nices.count %>
-           <% end %>
-        <% end %>
-    <% else %>
-        <i class="far fa-heart"></i><%= c.nices.count %>
-    <% end %>
-    
-  <% end %>
-
-  
-
-  <% if user_signed_in? %>
-    <%= form_with(model: [@post, @comment], local: true) do |f| %>
-      <%= f.text_area :content %><br>
-      <%= f.file_field :image %>
-      <%= button_tag type: "submit" do %>
-        <i class="far fa-comments"></i> レビュー投稿
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
-
-<%= link_to "喫茶店検索に戻る", posts_path %>
-
+<%= link_to "喫茶店検索に戻る", root_path %>
+<%= link_to "編集", edit_post_path(@post.id) %>
 <% if user_signed_in? && current_user.id == @post.user_id %>  
-  <%= link_to "編集", edit_post_path(@post.id) %>
-  <%= link_to "削除", post_path(@post.id), method: :delete, data: {confirm: '削除してよろしいですか？'} %>
+    <%= link_to "削除", post_path(@post.id), method: :delete %>
 <% end %>
-
 
 
 

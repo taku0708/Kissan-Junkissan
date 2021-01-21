@@ -1,19 +1,266 @@
-<h1>新規施設登録</h1>
-<h3>施設基本情報</h3>
-<%= form_for(@post, url:posts_path) do |f| %>
-    <div class="field">
-      <%= f.label :喫茶店名 %>
-      <%= f.text_field :name,id: 'address',:size => 50 %>
-      <input type="button" value="住所検索" onclick="codeAddress()">
-      <div id="latlngDisplay"></div>
-      <div id="addressDisplay">住所</div>
-      <div id='map'></div>
-      
+       <script>
+       $(document).on(‘change’, ‘:file’, function() {
+           var input = $(this),
+           numFiles = input.get(0).files ? input.get(0).files.length : 1,
+           label = input.val().replace(/\\/g, ‘/’).replace(/.*\//, ‘’);
+           input.parent().parent().next(‘:text’).val(label);
+           var files = !!this.files ? this.files : [];
+           if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+           if (/^image/.test( files[0].type)){ // only image file
+               var reader = new FileReader(); // instance of the FileReader
+               reader.readAsDataURL(files[0]); // read the local file
+               reader.onloadend = function(){ // set image data as background of div
+                   input.parent().parent().parent().prev(‘.imagePreview’).css(“background-image”, “url(“+this.result+“)”);
+               }
+           }
+       });
+       </script>
+<div class="newpage-homebox">
+  <header>
+    <div class="header-title">Kissan/Junkissan</div>
+    <div class="header-submenu">
+      <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
+      <div class="header-submenu-button">
+        <div class="header-submenu-button-writing">
+          <i class="fas fa-pen icon"></i>
+          喫茶店登録
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="new-vacantbox"></div>
+  <div class="new-explanation-matherbox">
+    <div class="new-explanation-headline">喫茶店を登録</div>
+    <div class="new-explanation-content">
+      施設登録にご協力くださり誠にありがとうございます。<br>
+      入力項目が多数あるので、書ける範囲でかまいません。<br>
+      一度登録した施設は誰でも編集可能です。<br>
+      既に同じ施設が登録されていないか今一度ご確認ください。
+    </div>
+  </div>
+  <%= form_for(@post, url:posts_path) do |f| %>
+    <div class="new-base-information-matherbox">
+      <div class="new-base-information-headline">基本情報</div>
+      <div class="new-base-information-vacantbox"></div>
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :喫茶店名 %>
+          </div>
+          <%= f.text_field :name, id: 'address', class:"new-textfield", :size => 75 %>
+          <input type="button" value="住所検索" onclick="codeAddress()">
+        </div>
+        <div id="latlngDisplay"></div>
+        <div id="addressDisplay">住所</div>
+        <div id='map'></div>  
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :都道府県 %>
+          </div>
+          <%= f.text_field :prefecture, class:"new-textfield", :size => 75 %>
+        </div>
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :住所 %>
+          </div>
+          <%= f.text_field :address, class:"new-textfield", :size => 75 %>
+        </div>
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :最寄り駅 %>
+          </div>
+          <%= f.text_field :nearest_station, class:"new-textfield", :size => 75 %>
+        </div>
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :TEL %>
+          </div>
+          <%= f.text_field :tel, class:"new-textfield", :size => 75 %>
+        </div>
+        <div class="new-base-information-name-matherbox">
+          <div class="new-base-information-name">
+            <%= f.label :HP %>
+          </div>
+          <%= f.text_field :hp, class:"new-textfield", :size => 75 %>
+        </div>
+    </div>
+    <div class="new-koumoku-matherbox">
+      <div class="new-base-information-headline">項目</div>
+      <div class="new-kooumoku-minibox">
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :wifi, "wifi" %>
+          <%= f.radio_button :wifi, "wifi" ,onclick:"radioDeselection1(this, 1)" %>
+        </div>
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :電源 %>
+          <%= f.radio_button :outlet, "電源" ,onclick:"radioDeselection2(this, 2)" %>
+        </div>
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :デザート %>
+          <%= f.radio_button :dessert, "デザート" ,onclick:"radioDeselection3(this, 3)" %>
+        </div>
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :ランチメニュー %>
+          <%= f.radio_button :lunch, "ランチメニュー" ,onclick:"radioDeselection4(this, 4)" %>
+        </div>
+        <div class="new-kooumoku-eachbox-forsnack">
+          <%= f.label :軽食（サンド等） %>
+          <%= f.radio_button :snack, "軽食" ,onclick:"radioDeselection5(this, 5)" %>
+        </div>
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :たばこ %>
+          <%= f.radio_button :tobacco, "たばこ" ,onclick:"radioDeselection6(this, 6)" %>
+        </div>
+        <div class="new-kooumoku-eachbox">
+          <%= f.label :駐車場 %>
+          <%= f.radio_button :parking, "駐車場" ,onclick:"radioDeselection7(this, 7)" %>
+        </div>
+      </div>
+    </div>
+    <div class="new-image-matherbox">
+      <div class="new-base-information-headline">写真</div>
+      <div class="new-image-minibox">
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image %>
+        </div>
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image_two %>
+        </div>
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image_three %>
+        </div>
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image_four %>
+        </div>
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image_five %>
+        </div>
+        <div class="new-image-eachbox">
+          <div class="new-image-eachbox-image">
+          </div>
+          <%= f.file_field :image_six %>
+        </div>
+      </div>
+    </div>
+    <div class="vacant-before-new-submit-button"></div>
+    <%= f.submit "投稿", class:"newpage-submit-button" %>
+  <% end %>
+</div>
+<footer>
+  <div class="footer-vacantbox"></div>
+  <div class="junkissan-box">Kissan/Junkissan</div>
+  <div class="junkissan-headline">未知の世界はすぐそこに。</div>
+  <div class="junkissan-snsbox">
+    <div class="junkissan-share">Share .</div>
+    <div class="junkissan-sns">
+      <i class="fab fa-twitter twitter"></i>
+      <i class="fab fa-facebook-f facebook"></i>
+      <i class="fab fa-instagram instagram"></i>
+    </div>
+  </div>
+  <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
+</footer>
+
+<%= link_to "トップページ", root_path %>
+
+<script>
+
+  var remove1 = 0;
+
+  function radioDeselection1(already, numeric) {
+    if(remove1 == numeric) {
+      already.checked = false;
+      remove1 = 0;
+    } else {
+      remove1 = numeric;
+    }
+  }
+
+  var remove2 = 0;
+
+  function radioDeselection2(already, numeric) {
+    if(remove2 == numeric) {
+      already.checked = false;
+      remove2 = 0;
+    } else {
+      remove2 = numeric;
+    }
+  }
+
+  var remove3 = 0;
+
+  function radioDeselection3(already, numeric) {
+    if(remove3 == numeric) {
+      already.checked = false;
+      remove3 = 0;
+    } else {
+      remove3 = numeric;
+    }
+  }
+
+  var remove4 = 0;
+
+  function radioDeselection4(already, numeric) {
+    if(remove4 == numeric) {
+      already.checked = false;
+      remove4 = 0;
+    } else {
+      remove4 = numeric;
+    }
+  }
+
+  var remove5 = 0;
+
+  function radioDeselection5(already, numeric) {
+    if(remove5 == numeric) {
+      already.checked = false;
+      remove5 = 0;
+    } else {
+      remove5 = numeric;
+    }
+  }
+
+  var remove6 = 0;
+
+  function radioDeselection6(already, numeric) {
+    if(remove6 == numeric) {
+      already.checked = false;
+      remove6 = 0;
+    } else {
+      remove6 = numeric;
+    }
+  }
+
+  var remove7 = 0;
+
+  function radioDeselection7(already, numeric) {
+    if(remove7 == numeric) {
+      already.checked = false;
+      remove7 = 0;
+    } else {
+      remove7 = numeric;
+    }
+  }
+
+</script>
+
       <style>
-      #map {
-        height: 300px;
-        width: 300px;
-      }
+            #map {
+              height: 510px;
+              width: 150px;
+            }
+            #latlngDisplay {
+              display: none;
+            }
       </style>
       
       
@@ -71,63 +318,7 @@
       
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
-                  
-      <br>  
-      <%= f.label :都道府県 %>
-      <%= f.text_field :prefecture, :size => 30 %><br>
-      <%= f.label :住所 %>
-      <%= f.text_field :address, :size => 70 %><br>
-      <%= f.label :tel %>
-      <%= f.text_field :tel, :size => 100 %><br>
-      <%= f.label :HP %>
-      <%= f.text_field :hp, :size => 100 %><br>
-      <%= f.label :営業時間 %>
-      <%= f.text_area :business_hours, class:"hoge", size: "30x10" %><br>
-      <%= f.label :写真トップ %>
-      <%= f.file_field :image %><br>
-      <%= f.label :写真2 %>
-      <%= f.file_field :image_two %><br>
-      <%= f.label :写真3 %>
-      <%= f.file_field :image_three %><br>
-      <%= f.label :写真4 %>
-      <%= f.file_field :image_four %><br>
-      <%= f.label :写真5 %>
-      <%= f.file_field :image_five %><br>
-      <%= f.label :写真6 %>
-      <%= f.file_field :image_six %><br>
-      <%= f.label :電源 %>
-      <%= f.radio_button :outlet, "電源" %><br>
-      <%= f.label :デザート %>
-      <%= f.radio_button :dessert, "デザート" %><br>
-      <%= f.label :ランチメニュー %>
-      <%= f.radio_button :lunch, "ランチメニュー" %><br>
-      <%= f.label :軽食（サンドウィッチ等） %>
-      <%= f.radio_button :snack, "軽食" %><br>
-      <%= f.label :たばこ %>
-      <%= f.radio_button :tobacco, "たばこ" %><br>
-      <%= f.label :駐車場 %>
-      <%= f.radio_button :parking, "駐車場" %><br>
-      <%= f.check_box :wifi %>
-      <%= f.label :wifi, "wifi" %>
 
-     
-    </div>
-    <%= f.submit "投稿" %>
-<% end %>                        
-<%= link_to "トップページ", root_path %>
-
-<script>
-      var remove = 0;
-
-      function radioDeselection(already, numeric) {
-        if(remove == numeric) {
-          already.checked = false;
-          remove = 0;
-        } else {
-          remove = numeric;
-        }
-      }
-</script>
 
 
 

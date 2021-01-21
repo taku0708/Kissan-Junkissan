@@ -1,58 +1,32 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
-  
-  <div class="field">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
+<div class="user-edit-homebox">
+  <div class="user-header">
+    <div class="user-header-headline">Kissan/Junkissan</div>
   </div>
-  
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :profile %><br />
-    <%= f.text_area :profile, autofocus: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+  <div class="user-edit-vacant-before-mather"></div>
+  <div class="edit-space-matherbox">
+    <div class="user-vacant-before-mathericon"></div>
+    <div class="user-mather-icon">
+      <%= image_tag current_user.image_url, class: "user-edit-icon", size: "50x50" if current_user.image? %>
+    </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+      <%= f.text_field :name, :placeholder => "ユーザーネーム", autofocus: true, autocomplete: "name", class:"user-each-textbox" %>
+      <%= f.email_field :email, :placeholder => "email", autofocus: true, autocomplete: "email", class:"user-each-textbox" %>
+      <%= f.text_field :instagram, :placeholder => "instagram(任意)",  class:"user-each-textbox" %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password", :placeholder => "新規パスワード", class:"user-each-textbox" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+      <%= f.password_field :current_password, autocomplete: "current-password", :placeholder => "現在のパスワード", class:"user-each-textbox" %>
+      <div class="edit-matherbox">
+        <%= f.submit "Update", :class => "edit-submit" %>
+      </div>
     <% end %>
+
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>

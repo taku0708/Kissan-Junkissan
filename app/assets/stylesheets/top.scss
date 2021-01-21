@@ -1,3 +1,360 @@
 // Place all the styles related to the top controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.top {
+  width: 100vw;
+  height: 100vh;
+  background-color: darkgoldenrod;
+  .top-search {
+    width: 100%;
+    height: 765px;
+    background-image: url("topground.png");
+    background-size: cover;
+    .top-search-matherbox {
+      height: 150px;
+      margin-top: 300px;
+      // background-color: plum;
+      .top-search-form-mather {
+        width: 500px;
+        height: 60px;
+        margin: auto;
+        display: flex;
+        border-radius: 30px;
+        background-color: white;
+        input[type="button"] {
+          margin-left: 5px;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          font-size: 20px;
+          color: red;
+          margin-top: 15px;
+          background-color: white;
+        }
+        .top-search-form {
+          display: block;
+          width: 360px;
+          height: 60px;
+          margin-left: 20px;
+          border: rgba(0, 0, 0, 0.2);
+        }
+        .top-submit-button {
+          width: 40px;
+          height: 30px;
+          margin-top: 15px;
+          margin-left: 20px;
+          // background-color: orchid;
+        }
+      }
+      .top-search-vacant-before-kodawari {
+        height: 5px;
+        // background-color: palegoldenrod;
+      }
+      .top-search-kodawaribox {
+        width: 300px;
+        height: 80px;
+        background-color: white;
+        border-radius: 20px;
+        margin: auto;
+        .top-search-kodawari-headline {
+          height: 20px;
+          margin-left: 10px;
+          // background-color: orangered;
+        }
+        .top-search-kodawari-vacant {
+          height: 10px;
+        }
+        .top-search-kodawari-button {
+          height: 50px;
+          font-size: 12px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          // background-color: orchid;
+        }
+      }
+      
+    }
+    .vacant-before-title {
+      height: 40px;
+    }
+    .top-title {
+      width: 850px;
+      height: 110px;
+      margin: auto;
+      // background-color: purple;
+      .top-title-main {
+        font-family: "acme";
+        font-size: 48px;
+        line-height: 60px;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: #FFFFFF;
+      }
+      .top-title-headline {
+        font-size: 18px;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  
+
+  .top-about {
+    width: 100%;
+    height: 660px;
+    background-color: gray;
+  }
+  footer {
+    width: 100%;
+    height: 180px;
+    background-color: rgba(0, 0, 0, 0.75);;
+  }
+
+  
+
+}
+
+header {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  
+  .header-title {
+    width: 324px;
+    height: 75px;
+    font-family: 'Acme';
+    font-size: 36px;
+    line-height: 75px;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  .header-submenu {
+    width: 230px;
+    height: 75px;
+    margin: 0px 70px 0px auto;
+    display: flex;
+    justify-content: space-between;
+    .header-submenu-icon-back {
+      width: 50px;
+      height: 50px;
+      margin: 13px 0px;
+      border-radius: 50%;
+      background-color: gray;
+    }
+    .header-submenu-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: gray;
+    }
+
+    .header-submenu-button {
+      width: 150px;
+      height: 40px;
+      margin: 17px 0px;
+      background-color:black;
+      border-radius: 6px;
+      .header-submenu-button-writing {
+        line-height: 40px;
+        text-align: center;
+        color: white;
+        .icon {
+          font-size: 15px;
+          color: white;
+        }
+      }
+    }
+  }
+}
+.top-new-category {
+    width: 100%;
+    // background-color: blueviolet;
+}
+.new-kissan-contents {
+      width: 1060px;
+      height: 320px;
+      margin: auto;
+      padding: 45px 0px 0px 0px;
+      // background-color: black;
+      display: flex;
+      justify-content: space-around;
+      .new-kissan-content {
+        width: 245px;
+        height: 300px;
+        box-shadow: 2px 2px 4px #e5e5e5;
+        // background-color: chartreuse;
+        border-radius: 20px;
+        .new-kissan-content-image-back {
+          border-radius: 20px 20px 0px 0px;
+          width: 245px;
+          height: 210px;
+          background-color: #e5e5e5;
+        }
+        .new-kissan-content-image {
+          border-radius: 20px 20px 0px 0px;
+        }
+
+        .new-kissan-content-text {
+          font-family: "Acme";
+          font-size: 18px;
+          // line-height: 70px;
+          margin: 20px 0px 0px 0px;
+          text-align: center;
+          color: #000000;
+          .new-kissan-heart-box {
+            width: 80px;
+            height: 25px;
+            margin: 0px 0px 20px 150px;
+            // background-color: chocolate;
+            .heart-icon {
+              font-size: 15px;
+              color: red;
+            }
+
+            .comment-icon {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+}
+.new-kissan-pagenation {
+      height: 15px;
+      // background-color: khaki;
+      line-height: 15px;
+      text-align: center;
+}
+
+.new-review-contents {
+      width: 900px;
+      margin: auto;
+      padding: 45px 0px 0px 0px;
+      // background-color: black;
+      .new-review-bigbox {
+        // height: 150px;
+        // background-color: yellow;
+        .new-review-information {
+          width: 200px;
+          height: 50px;
+          // background-color: salmon;
+          display: flex;
+          .new-review-information-image {
+            width: 40px;
+            height: 50px;
+            align-items: center;
+            // background-color: lightseagreen;
+            .review-user-icon {
+              border-radius: 50%;
+              margin: auto;
+            }
+          }
+          .review-kissan-user-name {
+            font-size: 14px;
+            text-align: center;
+            line-height: 50px;
+          }
+          .slash {
+            line-height: 50px;
+          }
+          .review-kissan-name {
+            font-family: Acme;
+            font-size: 14px;
+            line-height: 50px;
+            letter-spacing: 0.03em;
+            // background-color: burlywood;
+            color: rgba(19, 41, 237, 0.76);
+  
+          }
+          
+        }
+        .new-review-content-text-matherbox {
+          // height: 100px;
+          // background-color: teal;
+          .new-review-content-text {
+            width: 80%;
+            margin: auto;
+            text-align: left;
+            font-family: Acme;
+            font-size: 18px;
+            text-align: left;
+            // background-color: red;
+          }
+          .new-review-content-image {
+            margin-left: 300px;
+          }
+        }
+        .comment-nices {
+          height: 20px;
+          // background-color: brown;
+          margin-left: 750px;
+        }
+      }
+      .new-review-vacantbox {
+        height: 10px;
+        background-color: white;
+      }
+      .new-review-line {
+        width: 650px;
+        height: 0px;
+        margin: auto;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+      }
+}
+.new-review-pagenation {
+      height: 40px;
+      // background-color: turquoise;
+      line-height: 40px;
+      text-align: center;
+}
+.new-kissan-text {
+  padding: 30px 0px 0px 110px;
+  font-family: "Acme";
+  font-size: 36px;
+  line-height: 75px;
+  letter-spacing: 0.07em;
+  color: #000000;
+  // background-color: brown;
+}
+.header-hide-box {
+  width: 160px;
+  height: 200px;
+  // margin-left: 800px;
+  // margin-top: 70px;
+  background-color: white;
+  border-radius: 20px;
+  .header-hide-eachbox {
+    height: 50px;
+    // background-color: orangered;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+}
+.space-before-about {
+  height: 100px;
+}
+.new-kissan-content:hover {
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+  transform: translateY(-10px);
+  transition-duration: 0.5s;
+}
+.index-content-mini-box:hover {
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+  transform: translateY(-10px);
+  transition-duration: 0.5s;
+}
+
+a {
+  text-decoration: none;
+}

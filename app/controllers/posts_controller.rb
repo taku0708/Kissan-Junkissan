@@ -5,7 +5,7 @@ class PostsController < ApplicationController
     def index
         @qsearch = Post.search(search_params)
         @posts = @qsearch.result(distinct: true)
-        @posts = Post.all.page(params[:page]).per(3)
+        @posts = @posts.page(params[:page]).per(5)
     end
 
     def new
@@ -27,6 +27,7 @@ class PostsController < ApplicationController
     def show
         @post = Post.find(params[:id])
         @comments = @post.comments
+        @comments = @comments.page(params[:page]).per(3)
         @comment = Comment.new
     end
 

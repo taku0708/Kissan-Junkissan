@@ -1,53 +1,290 @@
-<% if user_signed_in? %>
-    <li><%= link_to "マイページへ", user_path(current_user.id) %></li>
-    <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
-<% else %>
-    <li><%= link_to "新規登録", new_user_registration_path %></li>
-    <li><%= link_to "ログイン", new_user_session_path %></li>
-<% end %>
 
-<%= link_to "施設登録", new_post_path %>
 
-<%= search_form_for(@q, url:posts_path) do |f| %>
-  <p>
-    <%= f.label :name_or_prefecture_or_address_or_nearest_station_cont, '名前' %>
-    <%= f.search_field :name_cont %>
-  </p>
+<div class="top">
+  <div class="top-search">
+    <header>
+      <div class="header-title">Kissan/Junkissan</div>
+      
+      <div class="header-submenu">
+        <div class="header-submenu-icon-back" onclick="clickBtn3()" >
+          <% if user_signed_in? %>
+            <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
+          <% end %>
+          <div id="p3" class="header-hide-box">
+            <div class="header-hide-eachbox">
+              <% if user_signed_in? %> 
+                <%= link_to "マイページへ", user_path(current_user.id) %>
+              <% else %>
+                <%= link_to "新規登録", new_user_registration_path %>
+              <% end %>
+            </div>
+            <div class="header-hide-eachbox">
+              <% if user_signed_in? %> 
+                <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+              <% else %>
+                <%= link_to "ログイン", new_user_session_path %>
+              <% end %>
+            </div>
+            <div class="header-hide-eachbox">
+              <%= link_to "top", root_path %>
+            </div>
+            <div class="header-hide-eachbox">
+            <% if user_signed_in? %>        
+              <%= link_to "編集", edit_user_registration_path %>
+            <% end %>
+            </div>
+          </div>
+          
+        </div>
+        <%= link_to  new_post_path do %>
+          <div class="header-submenu-button">
+            <div class="header-submenu-button-writing">
+              <i class="fas fa-pen icon"></i>
+              喫茶店登録
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </header>
+    <div class="top-search-matherbox">
+      <%= search_form_for(@q, url:posts_path) do |f| %>
+        <div class="top-search-form-mather">
+          <input type="button" value="❤" onclick="clickBtn2()" />
+          <%= f.search_field :name_cont, class:"top-search-form" %>
+          <%= f.submit "検索", :class => "top-submit-button" %>
+        </div>
+        <div class="top-search-vacant-before-kodawari"></div>
+        <div id="p2" class="top-search-kodawaribox">
+          <div class="top-search-kodawari-headline">コダワリ</div>
+          <div class="top-search-kodawari-vacant"></div>
+          <div class="top-search-kodawari-button">
+            <%= f.label :wifi_eq, "wifi" %>
+            <%= f.radio_button :wifi_eq, "wifi" ,onclick:"radioDeselection1(this, 1)" %>
+            <%= f.label :outlet_eq, '電源' %>
+            <%= f.radio_button :outlet_eq, "電源" ,onclick:"radioDeselection2(this, 2)"  %>
+            <%= f.label :dessert_eq, 'デザート' %>
+            <%= f.radio_button :dessert_eq, "デザート",onclick:"radioDeselection3(this, 3)" %>
+            <%= f.label :lunch_eq, 'ランチメニュー' %>
+            <%= f.radio_button :lunch_eq, "ランチメニュー" ,onclick:"radioDeselection4(this, 4)" %>
+            <%= f.label :snack_eq, '軽食（サンド等）' %>
+            <%= f.radio_button :snack_eq, "軽食" ,onclick:"radioDeselection5(this, 5)" %>
+            <%= f.label :tobacco_eq, 'たばこ' %>
+            <%= f.radio_button :tobacco_eq, "たばこ" ,onclick:"radioDeselection6(this, 6)" %>
+            <%= f.label :parking_eq, '駐車場' %>
+            <%= f.radio_button :parking_eq, "駐車場" ,onclick:"radioDeselection7(this, 7)" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="vacant-before-title"></div>
+    <div class="top-title">
+      <div class="top-title-headline">未知の世界はすぐそこに。</div>
+      <div class="top-title-main">Kissan/Junkissan</div>
+    </div>
+  </div>
+  <div class="top-new-category">
+    <div class="new-kissan-text">New Kissan</div>
+    <div class="new-kissan-contents">
+      <% @newpost.each do |n| %>
+        <%= link_to  post_path(n.id) do  %>
+          <div class="new-kissan-content">
+            <div class="new-kissan-content-image-back">
+              <%= image_tag n.image_url, class:"new-kissan-content-image", size: "245x210" if n.image? %>
+            </div>
+            <div class="new-kissan-content-text">
+              <%= n.name %>
+              <div class="new-kissan-heart-box">
+                <i class="far fa-heart heart-icon"></i><%= n.likes.count %>
+                <i class="far fa-comment comment-icon"></i><%= n.comments.count %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="new-kissan-pagenation">
+      <%= paginate @newpost %>
+    </div>
+    <div class="new-kissan-pagenation"></div>
+    <div class="new-kissan-text">New Review</div>
+    <div class="new-review-contents">
+      <% @newcomment.each do |n| %>
+        <div class="new-review-bigbox">
+          <div class="new-review-information">
+            <div class="new-review-information-image">
+              <%= image_tag n.user.image_url, class:"review-user-icon", size: "35x35" if n.user.image? %>
+            </div>
+            <a href="/users/<%= n.user.id %>" class="review-kissan-user-name"><%= n.user.name %></a>
+            <div class="slash"> / </div>
+            <a href="/posts/<%= n.post.id %>" class="review-kissan-name"><%= n.post.name %></a>
+          </div>
 
-  <p>
-    <%= f.check_box :wifi_eq %>
-    <%= f.label :wifi_eq, "wifi" %>
-  </p>
+          <div class="new-review-content-text-matherbox">
+            <div class="new-review-content-text">
+              <%= n.content %>
+            </div>
+            <%= image_tag n.image_url, class:"new-review-content-image", size: "100x100" if n.image? %>
+          </div>
+          <div class="comment-nices">
+            <% if user_signed_in? %>
+                <% if current_user.already_niced?(n) %>
+                  <%= link_to comment_nice_path(id: n.id, comment_id: n.id), method: :delete do %>
+                      <i class="fas fa-heart"></i><%=n.nices.count %>
+                  <% end %>
+                <% else %>
+                  <%= link_to comment_nices_path(id: n.id, comment_id: n.id), method: :post do %>
+                      <i class="far fa-heart"></i><%= n.nices.count %>
+                  <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-heart"></i><%= n.nices.count %>
+            <% end %>
+          </div>
+        </div>
+        <div class="new-review-vacantbox"></div>
+        <div class="new-review-line"></div>
+      <% end %>
+    </div>
+    <div class="new-review-pagenation">
+      <%= paginate @newcomment %>
+    </div>
+    <div class="space-before-about"></div>
+  </div>
+  <div class="top-about"></div>
+  <footer>
+    <div class="footer-vacantbox"></div>
+    <div class="junkissan-box">Kissan/Junkissan</div>
+    <div class="junkissan-headline">未知の世界はすぐそこに。</div>
+    <div class="junkissan-snsbox">
+      <div class="junkissan-share">Share .</div>
+      <div class="junkissan-sns">
+        <i class="fab fa-twitter twitter"></i>
+        <i class="fab fa-facebook-f facebook"></i>
+        <i class="fab fa-instagram instagram"></i>
+      </div>
+    </div>
+    <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
+  </footer>
+</div>
 
-  <p>
-    <%= f.label :outlet_eq, '電源' %>
-    <%= f.radio_button :outlet_eq, "電源" %>
-  </p>
+<script>
 
-  <p>
-    <%= f.label :dessert_eq, 'デザート' %>
-    <%= f.radio_button :dessert_eq, "デザート" %>
-  </p>
+var remove1 = 0;
 
-  <p>
-    <%= f.label :lunch_eq, 'ランチメニュー' %>
-    <%= f.radio_button :lunch_eq, "ランチメニュー" %>
-  </p>
+function radioDeselection1(already, numeric) {
+  if(remove1 == numeric) {
+    already.checked = false;
+    remove1 = 0;
+  } else {
+    remove1 = numeric;
+  }
+}
 
-  <p>
-    <%= f.label :snack_eq, '軽食（サンドウィッチ等）' %>
-    <%= f.radio_button :snack_eq, "軽食" %>
-  </p>
+var remove2 = 0;
 
-  <p>
-    <%= f.label :tobacco_eq, 'たばこ' %>
-    <%= f.radio_button :tobacco_eq, "たばこ" %>
-  </p>
+function radioDeselection2(already, numeric) {
+  if(remove2 == numeric) {
+    already.checked = false;
+    remove2 = 0;
+  } else {
+    remove2 = numeric;
+  }
+}
 
-  <p>
-    <%= f.label :parking_eq, '駐車場' %>
-    <%= f.radio_button :parking_eq, "駐車場" %>
-  </p>
+var remove3 = 0;
+
+function radioDeselection3(already, numeric) {
+  if(remove3 == numeric) {
+    already.checked = false;
+    remove3 = 0;
+  } else {
+    remove3 = numeric;
+  }
+}
+
+var remove4 = 0;
+
+function radioDeselection4(already, numeric) {
+  if(remove4 == numeric) {
+    already.checked = false;
+    remove4 = 0;
+  } else {
+    remove4 = numeric;
+  }
+}
+
+var remove5 = 0;
+
+function radioDeselection5(already, numeric) {
+  if(remove5 == numeric) {
+    already.checked = false;
+    remove5 = 0;
+  } else {
+    remove5 = numeric;
+  }
+}
+
+var remove6 = 0;
+
+function radioDeselection6(already, numeric) {
+  if(remove6 == numeric) {
+    already.checked = false;
+    remove6 = 0;
+  } else {
+    remove6 = numeric;
+  }
+}
+
+var remove7 = 0;
+
+function radioDeselection7(already, numeric) {
+  if(remove7 == numeric) {
+    already.checked = false;
+    remove7 = 0;
+  } else {
+    remove7 = numeric;
+  }
+}
+
+
+</script>
+
+<script>
+
+document.getElementById("p2").style.visibility ="hidden";
+
+
+function clickBtn2(){
+  const p2 = document.getElementById("p2");
   
-<%= f.submit %>
-<% end %>
+
+	if(p2.style.visibility=="visible"){
+
+		p2.style.visibility ="hidden";
+	}else{
+
+		p2.style.visibility ="visible";
+  }
+
+}
+
+document.getElementById("p3").style.visibility ="hidden";
+
+
+function clickBtn3(){
+  const p3 = document.getElementById("p3");
+  
+
+	if(p3.style.visibility=="visible"){
+
+		p3.style.visibility ="hidden";
+	}else{
+
+		p3.style.visibility ="visible";
+  }
+
+}
+
+
+</script>
+

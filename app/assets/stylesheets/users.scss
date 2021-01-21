@@ -1,3 +1,144 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.user-show-homebox {
+    height: 1700px;
+    background-color: #f5f5f5;
+    .user-show-matherbox {
+        width: 1060px;
+        height: 1400px;
+        background-color: white;
+        border-radius: 30px;
+        margin: auto;
+        margin-top: 85px;
+        .user-show-vacantbox {
+            height: 70px;
+            // background-color: blueviolet;
+        }
+        .user-show-iconbox {
+            width: 1060px;
+            height: 120px;
+            // background-color: aqua;
+            .user-show-icon {
+                display: block;
+                border-radius: 50%;
+                margin: auto;
+            }
+        }
+        .user-show-namebox {
+            height: 104px;
+            // background-color: brown;
+            .user-show-name {
+                height: 52px;
+                // background-color: chartreuse;
+                font-weight: bold;
+                font-size: 24px;
+                text-align: center;
+                letter-spacing: 0.07em;
+                color: #000000;
+                text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            }
+            .user-show-instagrambox {
+                width: 240px;
+                height: 52px;
+                margin: auto;
+                display: flex;
+                // background-color: cornflowerblue;
+                .user-show-instagram-icon {
+                    width: 80px;
+                    height: 52px;
+                    // background-color: crimson;
+                    .instagram-icon {
+                        font-size: 30px;
+                        margin-left: 50px;
+                    }
+
+                }
+            }
+        }
+        .user-show-underline {
+            width: 760px;
+            height: 0px;
+            margin: auto;
+            margin-top: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+
+        }
+    }
+}
+.user-edit-homebox {
+    height: 1050px;
+    background-color: plum;
+    background-image: url("loginimage.png");
+    background-size: cover;
+    .user-edit-vacant-before-mather {
+        height: 165px;
+    }
+    .edit-space-matherbox {
+        width: 500px;
+        height: 450px;
+        background-color: white;
+        margin: auto;
+        border-radius: 30px;
+    }
+}
+.edit-submit {
+    width: 60px;
+    height: 30px;
+    background-color: palegoldenrod;
+    margin-top: 20px;
+    margin-left: 220px;
+}
+.edit-matherbox {
+    height: 50px;
+    // background-color: palegoldenrod;
+}
+.user-edit-icon {
+    border-radius: 50px;
+}
+.user-header-headline {
+    width: 324px;
+    height: 75px;
+    font-family: 'Acme';
+    font-size: 36px;
+    line-height: 75px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    color: white;
+}
+.user-header {
+    height: 75px;
+}
+.user-mather-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-left: 225px;
+}
+.user-image-submit-button {
+    display: block;
+    margin: auto;
+}
+.vacant-before-icon {
+    height: 20px;
+}
+.user-vacant-before-mathericon {
+    height: 20px;
+}
+.user-each-textbox {
+    width: 210px;
+    height: 30px;
+    text-align: center;
+    margin-left: 145px;
+    margin-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+.edit-space-matherbox-for-login {
+    width: 500px;
+    height: 250px;
+    background-color: white;
+    margin: auto;
+    border-radius: 30px;
+}

@@ -1,25 +1,84 @@
+<div class="index-home-box">
+  <header>
+    <div class="header-title">Kissan/Junkissan</div>
+    <div class="header-submenu">
+      <% if user_signed_in? %>
+        <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
+      <% end %>
+      <div class="header-submenu-button">
+        <div class="header-submenu-button-writing">
+          <i class="fas fa-pen icon"></i>
+          喫茶店登録
+        </div>
+      </div>
+    </div>
+  </header>
+  
 
+  <div class="index-text">検索結果</div>
+  <div class="index-before-content-box"></div>
+  <div class="index-content-box">
+    <% @posts.each do |p| %>
+      <div class="index-content-mather-mini-box">
+        <%= link_to  post_path(p.id) do %>
+          <div class="index-content-mini-box">
+            <div class="index-content-mini-box-image">
+              <%= image_tag p.image_url, size: "165x145" if p.image? %>
+            </div>
+            <div class="index-content-mini-box-text">
+              <div class="index-content-mini-box-text-address">
+                <%= p.address %>
+              </div>
+              <div class="index-content-mini-box-text-name">
+                <%= p.name %>
+              </div>
+              <div class="index-content-mini-box-text-sub">
+                <div class="index-content-mini-box-text-sub-kodawari">
+                  <%= p.wifi %>
+                  <%= p.outlet %>
+                  <%= p.dessert %>
+                  <%= p.lunch %>
+                  <%= p.snack %>
+                  <%= p.tobacco %>
+                  <%= p.parking %>
+                </div>
+
+                <div class="index-content-mini-box-text-sub-heart">
+                  <i class="far fa-heart heart-icon"></i><%= p.likes.count %>
+                  <i class="far fa-comment comment-icon"></i><%= p.comments.count %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="index-content-mini-box-underline"></div>
+    <% end %>
+    <div class="index-pagenation">
+      <%= paginate @posts %>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-vacantbox"></div>
+  <div class="junkissan-box">Kissan/Junkissan</div>
+  <div class="junkissan-headline">未知の世界はすぐそこに。</div>
+  <div class="junkissan-snsbox">
+    <div class="junkissan-share">Share .</div>
+    <div class="junkissan-sns">
+      <i class="fab fa-twitter twitter"></i>
+      <i class="fab fa-facebook-f facebook"></i>
+      <i class="fab fa-instagram instagram"></i>
+    </div>
+  </div>
+  <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
+</footer>
 
 <% if user_signed_in? %>
 <%= link_to "マイページへ", user_path(current_user.id) %>　
 <% end %>
 <%= link_to "top", root_path %>
 
-<%= page_entries_info @posts %>
-
-<div class="posts-container">
-  <% @posts.each do |p| %>
-    <div class="post">
-      <%= image_tag p.image_url, size: "100x50" if p.image? %>
-      <%= p.name %>
-      <%= link_to "喫茶店詳細", post_path(p.id) %>
-      <i class="far fa-heart"></i><%= p.likes.count %>
-    </div>
-    
-  <% end %>
-</div>
-
-<%= paginate @posts %>
 
 
 
