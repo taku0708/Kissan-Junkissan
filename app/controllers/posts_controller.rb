@@ -18,7 +18,7 @@ class PostsController < ApplicationController
         post.user_id = current_user.id
         
         if post.save
-            redirect_to done_posts_path
+            redirect_to root_path
         else
             redirect_to :action => "new"
         end
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
       post = Post.find(params[:id])
 
       if post.update(post_params)
-         redirect_to done_posts_path
+         redirect_to post_path(params[:id])
       else
          redirect_to :action => "new"
       end
@@ -61,7 +61,7 @@ class PostsController < ApplicationController
     end
 
     def search_params
-        params.require(:q).permit(:name_cont, :wifi_eq, :dessert_eq, :parking_eq, :outlet_eq, :lunch_eq, :tobacco_eq, :snack_eq)
+        params.require(:q).permit(:name_or_prefecture_cont, :wifi_eq, :dessert_eq, :parking_eq, :outlet_eq, :lunch_eq, :tobacco_eq, :snack_eq)
     end
 
 

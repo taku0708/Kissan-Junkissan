@@ -8,7 +8,13 @@
       <div class="header-submenu">
         <div class="header-submenu-icon-back" onclick="clickBtn3()" >
           <% if user_signed_in? %>
-            <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
+            <% if current_user.image == nil %>
+              <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+            <% else %>
+              <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50"  %>
+            <% end %>
+          <% else %>
+            <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
           <% end %>
           <div id="p3" class="header-hide-box">
             <div class="header-hide-eachbox">
@@ -50,8 +56,10 @@
       <%= search_form_for(@q, url:posts_path) do |f| %>
         <div class="top-search-form-mather">
           <input type="button" value="❤" onclick="clickBtn2()" />
-          <%= f.search_field :name_cont, class:"top-search-form" %>
-          <%= f.submit "検索", :class => "top-submit-button" %>
+          <%= f.search_field :name_or_prefecture_cont, class:"top-search-form" %>
+          <%= button_tag type: "submit" do %>
+            <i class="fas fa-search search-icon"></i>
+          <% end %>
         </div>
         <div class="top-search-vacant-before-kodawari"></div>
         <div id="p2" class="top-search-kodawaribox">
@@ -150,7 +158,13 @@
     </div>
     <div class="space-before-about"></div>
   </div>
-  <div class="top-about"></div>
+  <div class="top-about">
+    <div class="top-vacant-before-about"></div>
+    <div class="about">About</div>
+    <div class="about-content">
+      薄暗い路地<br>小さな入り口<br>ちょっと入りづらいあの店の<br>扉を開けば新世界<br>あなたに合わせた<br>自由な使い方♪
+    </div>
+  </div>
   <footer>
     <div class="footer-vacantbox"></div>
     <div class="junkissan-box">Kissan/Junkissan</div>

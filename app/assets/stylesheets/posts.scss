@@ -173,6 +173,7 @@
 
             }
             input[type="button"] {
+                width: 50px;
                 height: 35px;
                 background-color: burlywood;
                 margin-top: 17.5px;
@@ -257,7 +258,7 @@
             .new-image-eachbox {
                 width: 260px;
                 height: 260px;
-                background-color: royalblue;
+                // background-color: royalblue;
                 .new-image-eachbox-image {
                     width: 260px;
                     height: 200px;
@@ -266,7 +267,14 @@
             }
         }
     }
-    
+    button[type="submit"] {
+        display: block;
+        width: 150px;
+        height: 75px;
+        border-radius: 30px;
+        background-color:burlywood;
+        margin: auto;
+    }
 }
 .newpage-submit-button {
     display: block;
@@ -523,4 +531,31 @@ footer {
     height: 20px;
     background-color: pink;
   }
+
+.fas {
+    font-size: 15px;
+}
+.plus-icon {
+    font-size: 20px;
+    margin-left: 120px;
+    margin-top: 10px;
+}
+.image-number {
+    height: 40px;
+    // background-color: aqua;
+    line-height: 40px;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.69);
+    text-align: center;
+}
+.plus-icon-for-comment {
+    margin-left: 440px;
+    margin-top: 5px;
+    color: white;
+    font-size: 20px;
+}
+.plus-for-submit-button {
+    font-size: 20px;
+    text-align: center;
+}
 

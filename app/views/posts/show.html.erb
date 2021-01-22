@@ -1,16 +1,52 @@
 <div class="post-show-homebox">
   <header>
     <div class="header-title">Kissan/Junkissan</div>
+
     <div class="header-submenu">
-      <% if user_signed_in? %>
-        <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
-      <% end %>
-      <div class="header-submenu-button">
-        <div class="header-submenu-button-writing">
-          <i class="fas fa-pen icon"></i>
-          喫茶店登録
+      <div class="header-submenu-icon-back" onclick="clickBtn3()" >
+        <% if user_signed_in? %>
+          <% if current_user.image == nil %>
+            <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+          <% else %>
+            <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50"  %>
+          <% end %>
+        <% else %>
+          <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+        <% end %>
+        <div id="p3" class="header-hide-box">
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to "マイページへ", user_path(current_user.id) %>
+            <% else %>
+              <%= link_to "新規登録", new_user_registration_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+            <% else %>
+              <%= link_to "ログイン", new_user_session_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <%= link_to "top", root_path %>
+          </div>
+          <div class="header-hide-eachbox">
+          <% if user_signed_in? %>        
+            <%= link_to "編集", edit_user_registration_path %>
+          <% end %>
+          </div>
         </div>
+        
       </div>
+      <%= link_to  new_post_path do %>
+        <div class="header-submenu-button">
+          <div class="header-submenu-button-writing">
+            <i class="fas fa-pen icon"></i>
+            喫茶店登録
+          </div>
+        </div>
+      <% end %>
     </div>
   </header>
   <div class="post-show-matherbox">
@@ -43,6 +79,8 @@
         </div>
         <div class="post-show-shousai-gmap">
           <div id='map'></div>
+          <div id="latlngDisplay"></div>
+          <div id="addressDisplay"></div>
         </div>
       </div>
       <div class="post-show-shousai-content">
@@ -62,7 +100,7 @@
         <div class="post-show-shousai-content-underline"></div>
         <div class="post-show-shousai-content-eachbox">
           <div class="post-show-shousai-content-kissatenmei">住所</div>
-          <div class="post-show-shousai-content-postname">
+          <div id="address" class="post-show-shousai-content-postname">
             <%= @post.address %>
           </div>
         </div>
@@ -175,7 +213,9 @@
                   <% end %>
                 <% end %>
             <% else %>
+              <% if user_signed_in? %>
                 <i class="far fa-heart"></i><%= c.nices.count %>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -192,7 +232,10 @@
       <% if user_signed_in? %>
         <%= form_with(model: [@post, @comment], local: true) do |f| %>
           <%= f.text_area :content, class:"review-writing-box"  %>
-          <%= f.file_field :image , class:"post-show-review-imagebox" %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon-for-comment"></i>
+            <%= f.file_field :image , class:"image-image-image" %>
+          </label>
           <%= button_tag type: "submit" do %>
             <i class="far fa-comments"></i>
           <% end %>
@@ -276,8 +319,7 @@
       
       
       function codeAddress(){
-        let inputAddress = document.getElementById('address').textContent
-      
+        const inputAddress = document.getElementById('address').textContent
         geocoder.geocode( { 'address': inputAddress}, function(results, status) {
           if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
@@ -309,13 +351,27 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
 
 
+      <script>
 
-<%= link_to "喫茶店検索に戻る", root_path %>
-<%= link_to "編集", edit_post_path(@post.id) %>
-<% if user_signed_in? && current_user.id == @post.user_id %>  
-    <%= link_to "削除", post_path(@post.id), method: :delete %>
-<% end %>
-
+      document.getElementById("p3").style.visibility ="hidden";
+      
+      
+      function clickBtn3(){
+        const p3 = document.getElementById("p3");
+        
+      
+        if(p3.style.visibility=="visible"){
+      
+          p3.style.visibility ="hidden";
+        }else{
+      
+          p3.style.visibility ="visible";
+        }
+      
+      }
+      
+      
+      </script>
 
 
 

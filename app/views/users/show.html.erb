@@ -1,16 +1,52 @@
 <div class="user-show-homebox">
   <header>
     <div class="header-title">Kissan/Junkissan</div>
+
     <div class="header-submenu">
-      <% if user_signed_in? %>
-        <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
-      <% end %>
-      <div class="header-submenu-button">
-        <div class="header-submenu-button-writing">
-          <i class="fas fa-pen icon"></i>
-          喫茶店登録
+      <div class="header-submenu-icon-back" onclick="clickBtn3()" >
+        <% if user_signed_in? %>
+          <% if current_user.image == nil %>
+            <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+          <% else %>
+            <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50"  %>
+          <% end %>
+        <% else %>
+          <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+        <% end %>
+        <div id="p3" class="header-hide-box">
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to "マイページへ", user_path(current_user.id) %>
+            <% else %>
+              <%= link_to "新規登録", new_user_registration_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+            <% else %>
+              <%= link_to "ログイン", new_user_session_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <%= link_to "top", root_path %>
+          </div>
+          <div class="header-hide-eachbox">
+          <% if user_signed_in? %>        
+            <%= link_to "編集", edit_user_registration_path %>
+          <% end %>
+          </div>
         </div>
+        
       </div>
+      <%= link_to  new_post_path do %>
+        <div class="header-submenu-button">
+          <div class="header-submenu-button-writing">
+            <i class="fas fa-pen icon"></i>
+            喫茶店登録
+          </div>
+        </div>
+      <% end %>
     </div>
   </header>
   <div class="user-show-matherbox">
@@ -27,7 +63,7 @@
           <i class="fab fa-instagram instagram-icon"></i>
         </div>
         <div class="user-show-instagram-username">
-          <%= @user.instagram %>
+          7nagai_harappa8
         </div>
       </div>
     </div>
@@ -113,6 +149,25 @@
   <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
 </footer>
 
+      <script>
 
+      document.getElementById("p3").style.visibility ="hidden";
+      
+      
+      function clickBtn3(){
+        const p3 = document.getElementById("p3");
+        
+      
+        if(p3.style.visibility=="visible"){
+      
+          p3.style.visibility ="hidden";
+        }else{
+      
+          p3.style.visibility ="visible";
+        }
+      
+      }
+      
+      
+      </script>
 
-<%= link_to "トップページ", root_path %>

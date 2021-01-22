@@ -1,31 +1,53 @@
-       <script>
-       $(document).on(‘change’, ‘:file’, function() {
-           var input = $(this),
-           numFiles = input.get(0).files ? input.get(0).files.length : 1,
-           label = input.val().replace(/\\/g, ‘/’).replace(/.*\//, ‘’);
-           input.parent().parent().next(‘:text’).val(label);
-           var files = !!this.files ? this.files : [];
-           if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-           if (/^image/.test( files[0].type)){ // only image file
-               var reader = new FileReader(); // instance of the FileReader
-               reader.readAsDataURL(files[0]); // read the local file
-               reader.onloadend = function(){ // set image data as background of div
-                   input.parent().parent().parent().prev(‘.imagePreview’).css(“background-image”, “url(“+this.result+“)”);
-               }
-           }
-       });
-       </script>
+
 <div class="newpage-homebox">
   <header>
     <div class="header-title">Kissan/Junkissan</div>
+
     <div class="header-submenu">
-      <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50" if current_user.image? %>
-      <div class="header-submenu-button">
-        <div class="header-submenu-button-writing">
-          <i class="fas fa-pen icon"></i>
-          喫茶店登録
+      <div class="header-submenu-icon-back" onclick="clickBtn3()" >
+        <% if user_signed_in? %>
+          <% if current_user.image == nil %>
+            <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+          <% else %>
+            <%= image_tag current_user.image_url, class:"header-submenu-icon", size: "50x50"  %>
+          <% end %>
+        <% else %>
+          <%= image_tag "no-image-photo.png", class:"no-image-icon" %>
+        <% end %>
+        <div id="p3" class="header-hide-box">
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to "マイページへ", user_path(current_user.id) %>
+            <% else %>
+              <%= link_to "新規登録", new_user_registration_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <% if user_signed_in? %> 
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+            <% else %>
+              <%= link_to "ログイン", new_user_session_path %>
+            <% end %>
+          </div>
+          <div class="header-hide-eachbox">
+            <%= link_to "top", root_path %>
+          </div>
+          <div class="header-hide-eachbox">
+          <% if user_signed_in? %>        
+            <%= link_to "編集", edit_user_registration_path %>
+          <% end %>
+          </div>
         </div>
+        
       </div>
+      <%= link_to  new_post_path do %>
+        <div class="header-submenu-button">
+          <div class="header-submenu-button-writing">
+            <i class="fas fa-pen icon"></i>
+            喫茶店登録
+          </div>
+        </div>
+      <% end %>
     </div>
   </header>
   <div class="new-vacantbox"></div>
@@ -47,7 +69,7 @@
             <%= f.label :喫茶店名 %>
           </div>
           <%= f.text_field :name, id: 'address', class:"new-textfield", :size => 75 %>
-          <input type="button" value="住所検索" onclick="codeAddress()">
+          <input type="button" value="&#xf002;" class="fas" onclick="codeAddress()">
         </div>
         <div id="latlngDisplay"></div>
         <div id="addressDisplay">住所</div>
@@ -122,37 +144,63 @@
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image ,class:"image-image-image" %>
+            <div class="image-number">トップ</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_two %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_two ,class:"image-image-image" %>
+            <div class="image-number">2枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_three %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_three ,class:"image-image-image" %>
+            <div class="image-number">3枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_four %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_four ,class:"image-image-image" %>
+            <div class="image-number">4枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_five %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_five ,class:"image-image-image" %>
+            <div class="image-number">5枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_six %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_six ,class:"image-image-image" %>
+            <div class="image-number">6枚目</div>
+          </label>
         </div>
       </div>
     </div>
     <div class="vacant-before-new-submit-button"></div>
-    <%= f.submit "投稿", class:"newpage-submit-button" %>
+    <%= button_tag type: "submit" do %>
+      <i class="fas fa-pen plus-for-submit-button"></i>
+    <% end %>
   <% end %>
 </div>
 <footer>
@@ -169,8 +217,6 @@
   </div>
   <div class="junkissan-copyright">© 2021 Kissan/Junkissan All Rights Reserved</div>
 </footer>
-
-<%= link_to "トップページ", root_path %>
 
 <script>
 
@@ -319,6 +365,27 @@
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
 
+      <script>
+
+      document.getElementById("p3").style.visibility ="hidden";
+      
+      
+      function clickBtn3(){
+        const p3 = document.getElementById("p3");
+        
+      
+        if(p3.style.visibility=="visible"){
+      
+          p3.style.visibility ="hidden";
+        }else{
+      
+          p3.style.visibility ="visible";
+        }
+      
+      }
+      
+      
+      </script>
 
 
 
