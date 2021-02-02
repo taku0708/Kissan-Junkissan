@@ -68,7 +68,7 @@
             <%= f.label :喫茶店名 %>
           </div>
           <%= f.text_field :name, id: 'address', class:"new-textfield", :size => 75 %>
-          <input type="button" value="住所検索" onclick="codeAddress()">
+          <input type="button" value="&#xf002;" class="fas" onclick="codeAddress()">
         </div>
         <div id="latlngDisplay"></div>
         <div id="addressDisplay">住所</div>
@@ -143,37 +143,63 @@
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image ,class:"image-image-image" %>
+            <div class="image-number">トップ</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_two %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_two ,class:"image-image-image" %>
+            <div class="image-number">2枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_three %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_three ,class:"image-image-image" %>
+            <div class="image-number">3枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_four %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_four ,class:"image-image-image" %>
+            <div class="image-number">4枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_five %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_five ,class:"image-image-image" %>
+            <div class="image-number">5枚目</div>
+          </label>
         </div>
         <div class="new-image-eachbox">
           <div class="new-image-eachbox-image">
           </div>
-          <%= f.file_field :image_six %>
+          <label class:"label">
+            <i class="fas fa-plus-square plus-icon"></i>
+            <%= f.file_field :image_six ,class:"image-image-image" %>
+            <div class="image-number">6枚目</div>
+          </label>
         </div>
       </div>
     </div>
     <div class="vacant-before-new-submit-button"></div>
-    <%= f.submit "投稿", class:"newpage-submit-button" %>
+    <%= button_tag type: "submit" do %>
+      <i class="fas fa-pen plus-for-submit-button"></i>
+    <% end %>
   <% end %>
 </div>
 <footer>
