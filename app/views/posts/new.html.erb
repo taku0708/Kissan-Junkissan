@@ -337,7 +337,7 @@
       
       
       function codeAddress(){
-        let inputAddress = document.getElementById('address').value;
+        const inputAddress = document.getElementById('address').value;
       
         geocoder.geocode( { 'address': inputAddress}, function(results, status) {
           if (status == 'OK') {
@@ -363,7 +363,7 @@
       }
       
       </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZoCXf8qQakMaUk3JLDRu0QRwGBhbd540&callback=initMap" async defer></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAP_API_KEY"]%>&callback=initMap" async defer></script>
 
       <script>
 
@@ -384,8 +384,19 @@
       
       }
       
+      function doReload() {
+ 
+    
+        removeDataById(map)
+        removeDataById(latlngDisplay)
+        removeDataById(addressDisplay)
+      }
+
+      window.setTimeout(doReload, 5000);
       
       </script>
+
+    
 
 
 
