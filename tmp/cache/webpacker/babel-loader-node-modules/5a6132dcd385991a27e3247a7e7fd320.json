@@ -1,0 +1,1 @@
+{"ast":null,"code":"window.alert(\"new_map\");","map":{"version":3,"sources":["C:/Users/Taku0708/Desktop/junkissan/app/javascript/packs/new_map.js"],"names":["window","alert"],"mappings":"AAAAA,MAAM,CAACC,KAAP,CAAa,SAAb","sourcesContent":["window.alert(\"new_map\")"]},"metadata":{},"sourceType":"module"}
