@@ -327,27 +327,27 @@
             margin-left: 80px;
             display: flex;
             .post-show-shousai-image {
-                width: 395px;
+                width: 350px;
                 height: 510px;
                 // background-color: tomato;
                 .post-show-shousai-postimage {
-                    width: 395px;
+                    width: 350px;
                     height: 240px;
                     background-color: #e5e5e5;
                 }
                 .post-show-shousai-gmap {
-                    width: 395px;
+                    width: 350px;
                     height: 240px;
                     margin-top: 30px;
                     background-color: gray;
                     #map {
-                        width: 395px;
+                        width: 350px;
                         height: 240px;
                     }
                 }
             }
             .post-show-shousai-content {
-                width: 515px;
+                width: 560px;
                 height: 510px;
                 // background-color: violet;
                 .post-show-shousai-content-eachbox {
@@ -355,24 +355,24 @@
                     // background-color: steelblue;
                     display: flex;
                     .post-show-shousai-content-kissatenmei {
-                        width: 155px;
+                        width: 130px;
                         height: 72px;
                         // background-color: sienna;
-                        font-size: 18px;
-                        color: rgba(0, 0, 0, 0.6);
+                        font-size: 14px;
+                        color: rgba(0, 0, 0, 0.4);
                         line-height: 72px;
                         text-align: center; 
                     }
                     .post-show-shousai-content-postname {
-                        width: 360px;
+                        width: 430px;
                         height: 72px;
                         // background-color: silver;
-                        font-size: 24px;
+                        font-size: 20px;
                         line-height: 72px;
                     }
                 }
                 .post-show-shousai-content-underline {
-                    width: 435px;
+                    width: 480px;
                     height: 0px;
                     margin: auto;
                     border: 1px solid rgba(0, 0, 0, 0.2);
