@@ -71,7 +71,7 @@
     <div class="new-kissan-text">お気に入り</div>
     <div class="new-kissan-contents">
       <% @userlikes.each do |n| %>
-        <%= link_to  post_path(n.id) do  %>
+        <a href="/posts/<%= n.post.id %>">
           <div class="new-kissan-content">
             <div class="new-kissan-content-image-back">
               <%= image_tag n.post.image_url, class:"new-kissan-content-image", size: "245x210" if n.post.image? %>
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-        <% end %>
+        </a>
       <% end %>
     </div>
     <div class="new-kissan-pagenation">
